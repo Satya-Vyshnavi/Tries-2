@@ -1,0 +1,24 @@
+T.c --> O(nlog(n-k))
+S.c --> O(2n-k)
+
+class Solution {
+    public int[] topKFrequent(int[] nums, int k) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+
+        for(int i =0; i<nums.length; i++){
+            map.put(nums[i], map.getOrDefault(nums[i],0)+1);
+        }
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>((a,b) -> b[1]-a[1]);
+        int[] result = new int[k];  
+        int i =0;
+        for(Integer key : map.keySet()){
+         int[] temp = new int[]{key, map.get(key)};
+         pq.add(temp);
+         if(pq.size() > map.size() -k){
+            result[i++] = pq.poll()[0];
+         }
+        }
+        return result;
+    }
+}
